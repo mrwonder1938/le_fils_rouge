@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recette{% endblock %}
+
+{% block body %}
+    <h1>Recette</h1>
+
+    <a href="{{ path('app_recette_edit', {'id': recette.id}) }}">edit</a>
+
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ recette.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ recette.titre }}</td>
+            </tr>
+            <tr>
+                <th>Catégorie</th>
+                <td>{{ recette.category.nom }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ image_recette(recette.image , 400)  }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ recette.description }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ recette.prix }}</td>
+            </tr>
+            <tr>
+                <th>Dt_creation</th>
+                <td>{{ recette.dtCreation ? recette.dtCreation|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Laisser un commentaire sur cette recette :</h3>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" class="btn btn-primary my-3">
+    {{ form_end(form) }}
+
+    {% if commentaires | length > 0  %}
+
+    <h3>{{ commentaires | length }} Commentaire(s) existant(s) :</h3>
+
+    <ul>
+        {% for commentaire in commentaires %}
+            <li>{{ commentaire.email }} - {{ commentaire.sujet }} - {{ commentaire.message }}</li>
+        {% endfor %}
+    </ul>
+
+    {% endif %}
+
+    
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<section class="row">
+    <sidebar class="col-3"> 
+        <h2>Menu admin</h2>
+        <!--
+        utiliser le module bootstrap
+        https://getbootstrap.com/docs/5.3/components/list-group/
+         -->
+         <div class="list-group">
+            <a href="{{ path("page_dashboard") }}" class="list-group-item list-group-item-action">
+                Dashboard
+            </a>
+            <a href="{{ path("app_recette_index") }}" class="list-group-item list-group-item-action">
+                Gestion des Recettes
+            </a>
+            {% if is_granted("ROLE_ADMIN") %}
+                 <a href="{{ path("app_category_index") }}" class="list-group-item list-group-item-action">
+                    Gestion des Catégories
+                </a>
+                
+                <a href="{{ path("app_auteur_index") }}" class="list-group-item list-group-item-action">
+                    Gestion des Auteurs
+                </a>
+                <a href="{{ path("app_commentaire_index") }}" class="list-group-item list-group-item-action">
+                    Gestion des Commentaires
+                </a>
+            {% endif %}
+         </div>
+    </sidebar> 
+    <div class="col-9">
+        {% block body_back %}{% endblock %}
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}Recette index{% endblock %}
+
+{% block body_back %}
+    <h1>{{ recettes | length }} Recette(s) </h1>
+
+    <a href="{{ path('app_recette_new') }}" class="btn btn-primary my-3">Créer une nouvelle recette</a>
+
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Catégorie</th>
+                <th>Miniature</th>
+                <th>Prix</th>
+                <th>Créé le</th>
+                <th>par</th>
+                <th width="120">actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for recette in recettes %}
+            <tr>
+                <td>{{ recette.id }}</td>
+                <td>{{ recette.titre }}</td>
+                <td>{{ recette.category.nom }}</td>
+                <!-- twig extension  -->
+                <td>{{ image_recette(recette.image)  }}</td>
+                <td class="text-center">{{ recette.prix | info_prix }}</td>
+                <td>{{ recette.dtCreation ? recette.dtCreation|date('d/m/Y') : '' }}</td>
+                <td>{{ recette.auteur.email }}</td>
+                <td>
+                    <a href="{{ path('app_recette_edit', {'id': recette.id}) }}" class="btn btn-warning btn-sm me-1">
+                    <i class="bi bi-pencil-square"></i>
+                    </a>
+                    {{ include('recette/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+{% endblock %}

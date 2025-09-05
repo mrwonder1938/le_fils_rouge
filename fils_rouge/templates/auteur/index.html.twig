@@ -1,0 +1,45 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}Auteur index{% endblock %}
+
+{% block body_back %}
+    <h1>Auteur index</h1>
+
+     <a href="{{ path('app_auteur_new') }}" class="btn btn-dark my-3">Créer nouvel auteur</a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th width="120">actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for auteur in auteurs %}
+            <tr>
+                <td>{{ auteur.id }}</td>
+                <td>{{ auteur.email }}</td>
+                <td>
+                    {% for role in auteur.roles %}
+                        {{ role }} ,
+                    {% endfor %}
+                </td>
+                <td>
+                    <a href="{{ path('app_auteur_edit', {'id': auteur.id}) }}" class="btn btn-warning btn-sm me-1">
+                    <i class="bi bi-pencil-square"></i>
+                    </a>
+                    {{ include('auteur/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+   
+{% endblock %}
